@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <X11/X.h>
 #include <X11/keysym.h>
-#include "minilibx-linux/mlx.h"
+#include "minilibx/mlx.h"
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 2160
