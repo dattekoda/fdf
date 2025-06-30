@@ -46,9 +46,7 @@ int	main(void)
 	mlx_loop_hook(data.mlx_ptr, &handle_no_event, &data);
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
 	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
-
 	mlx_loop(data.mlx_ptr);
-
 	mlx_destroy_display(data.mlx_ptr);
 	return (free(data.mlx_ptr), 0);
 }

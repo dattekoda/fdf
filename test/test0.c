@@ -1,19 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <X11/X.h>
-#include <X11/keysym.h>
-#include "../minilibx/mlx.h"
-
-# define WINDOW_WIDTH 600
-# define WINDOW_HEIGHT 300
-# define MLX_ERROR 1
-
-typedef struct s_data
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_ptr;
-}	t_data;
+#include "test.h"
 
 int	main(void)
 {
@@ -27,11 +12,15 @@ int	main(void)
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "My first window");
 	if (!data.win_ptr)
 		return (free(data.mlx_ptr), MLX_ERROR);
-	data.img_ptr = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!data.img_ptr)
+	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data.img.mlx_img)
 		return (free(data.mlx_ptr), free(data.win_ptr), MLX_ERROR);
 	while (x_len-- != 0)
 		while (y_len-- != 0)
-			mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img_ptr, x_len, y_len);
+			mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.mlx_img, x_len, y_len);
+	mlx_destroy_window(data.mlx_ptr, data.win_ptr);
+	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
+	mlx_destroy_display(data.mlx_ptr);
+	free(data.mlx_ptr);
 	return (0);
 }
