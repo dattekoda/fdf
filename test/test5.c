@@ -191,17 +191,15 @@ void	render_line(t_img *img, t_line line, int color)
 	}
 }
 
-void	render_point(t_img *img, t_point point, t_int_list list, int color)
+void	render_square(t_img *img, t_square point, int color)
 {
 	int	i;
 	int	j;
 	
-	i = point.s_x;
-	while (i <= point.g_x)
-	{
-		j = line.s_x;
-		while (j <= line.g_y)
-	}
+	render_line(img, (t_line){point.s_x, point.s_y, point.s_x, point.g_y}, color);
+	render_line(img, (t_line){point.s_x, point.s_y, point.g_x, point.s_y}, color);
+	render_line(img, (t_line){point.s_x, point.g_y, point.g_x, point.g_y}, color);
+	render_line(img, (t_line){point.g_x, point.s_y, point.g_x, point.g_y}, color);
 }
 
 int	render(t_data *data, t_int_list *list)
@@ -209,13 +207,10 @@ int	render(t_data *data, t_int_list *list)
 	if (!data->win_ptr)
 		return (1);
 	render_background(&data->img, WHITE_PIXEL);
-	render_line(&data->img, (t_line){30, 30, 30, 900}, BLU_PIXEL);
-	render_line(&data->img, (t_line){30, 30, 900, 30}, BLU_PIXEL);
-	render_line(&data->img, (t_line){30, 900, 900, 900}, BLU_PIXEL);
-	render_line(&data->img, (t_line){900, 30, 900, 900}, BLU_PIXEL);
+	render_square(&data->img, (t_square){WINDOW_WIDTH / 10, WINDOW_HEIGHT / 10, WINDOW_WIDTH * 9 / 10, WINDOW_HEIGHT * 9 / 10}, BLACK_PIXEL);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	//4th and 5th arguments indicate the starting position (coordinates).
-	//Perhaps, I can use this as a zooming or moving functions.
+	//Perhaps, you can use this as a zooming or moving functions.
 	return (0);
 }
 
