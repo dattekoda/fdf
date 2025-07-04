@@ -193,16 +193,11 @@ int	check_coordinates(t_coords *coords, size_t num_l, size_t num_c)
 
 void	free_coordinates(t_coords *coords)
 {
-	t_coords	*coords_r;
-	t_coords	*coords_d;
-
-	coords_r = coords->right;
-	coords_d = coords->down;
+	if (!coords)
+		return ;
+	free_coordinates(coords->right);
+	free_coordinates(coords->down);
 	free(coords);
-	if (!coords_r)
-		free_coordinates(coords_r);
-	if (!coords_d)
-		free_coordinates(coords_d);
 }
 
 int	main(int argc, char *argv[])
@@ -223,5 +218,5 @@ int	main(int argc, char *argv[])
 	free(txt);
 	if (check_coordinates(coords, num_l, num_c))
 		return (close(fd), free_coordinates(coords), FAILURE);
-	return (close(fd), free(coords), SUCCESS);
+	return (close(fd), free_coordinates(coords), SUCCESS);
 }
