@@ -99,4 +99,19 @@ typedef struct s_input
 	size_t	num_c; //x
 }	t_input;
 
+char		*get_txt(int fd);
+char		*get_elem(char *txt, int x, int y);
+t_coords	*get_coordinate(t_input input, int i, int j);
+t_coords	*get_all_coordinates(t_input input, int i, int j);
+uint32_t	get_color(const char *elem, const char *base);
+int			have_color(char **elem);
+t_coords	*init_coords(int x, int y, char *elem);
+size_t		count_words(char *s, char c);
+size_t		count_line(char *txt);
+size_t		count_column(char *txt);
+int			check_coordinates(t_coords *coords, size_t num_l, size_t num_c);
+void		free_coordinates(t_coords *coords);
+
+
+
 #endif

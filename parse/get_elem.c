@@ -28,6 +28,24 @@ char	*get_txt(int fd)
 	return (txt);
 }
 
+static size_t	count_words(char *s, char c)
+{
+	size_t	count;
+
+	count = 0;
+	while (*s)
+	{
+		while (*s && *s == c)
+			s++;
+		if (!*s)
+			break ;
+		count++;
+		while (*s && *s != c)
+			s++;
+	}
+	return (count);
+}
+
 uint32_t	get_color(const char *elem, const char *base)
 {
 	uint32_t	num;
@@ -64,7 +82,36 @@ int	have_color(char **elem)
 	return (1);
 }
 
-//各要素の先頭ポインタを取得
+size_t	count_line(char *txt)
+{
+	char	*_txt;
+
+	_txt = txt;
+	while (*_txt && *(_txt + 1))
+		_txt++;
+	if (*_txt == '\n')
+		return (count_words(txt, '\n'));
+	return (count_words(txt, '\n') + 1);
+}
+
+size_t	count_column(char *txt)
+{
+	size_t	count;
+
+	count = 0;
+	while (*txt && *txt != '\n')
+	{
+		while (*txt == ' ')
+			txt++;
+		if (!*txt || *txt == '\n')
+			break ;
+		count++;
+		while (*txt && *txt != ' ' && *txt != '\n')
+			txt++;
+	}
+	return (count);
+}
+
 char	*get_elem(char *txt, int x, int y)
 {
 	char	*elem;
@@ -108,79 +155,31 @@ t_coords	*init_coords(int x, int y, char *elem)
 	return (coords);
 }
 
-t_coords	*get_coordinate(t_input input, int i, int j)
+t_coords	*get_coordinate(t_input input, int x, int y)
 {
 	t_coords	*coords;
 
-	coords = init_coords(i, j, get_elem(input.txt, i, j));
+	coords = init_coords(x, y, get_elem(input.txt, x, y));
 	if (!coords)
 		return (NULL);
 	if (input.num_c != 0)
-		i = (i + 1) % input.num_c;
-	if (i == 0)
-		j++;
+		x = (x + 1) % input.num_c;
+	if (x == 0)
+		y++;
 	return (coords);
 }
 
-size_t	count_words(char *s, char c)
-{
-	size_t	count;
-
-	count = 0;
-	while (*s)
-	{
-		while (*s && *s == c)
-			s++;
-		if (!*s)
-			break ;
-		count++;
-		while (*s && *s != c)
-			s++;
-	}
-	return (count);
-}
-
-size_t	count_line(char *txt)
-{
-	char	*_txt;
-
-	_txt = txt;
-	while (*_txt && *(_txt + 1))
-		_txt++;
-	if (*_txt == '\n')
-		return (count_words(txt, '\n'));
-	return (count_words(txt, '\n') + 1);
-}
-
-size_t	count_column(char *txt)
-{
-	size_t	count;
-
-	count = 0;
-	while (*txt && *txt != '\n')
-	{
-		while (*txt == ' ')
-			txt++;
-		if (!*txt || *txt == '\n')
-			break ;
-		count++;
-		while (*txt && *txt != ' ' && *txt != '\n')
-			txt++;
-	}
-	return (count);
-}
-
-t_coords	*get_all_coordinates(t_input input, int i, int j)
+t_coords	*get_all_coordinates(t_input input, int x, int y)
 {
 	t_coords	*coords;
 
-	coords = get_coordinate(input, i, j);
+	coords = get_coordinate(input, x, y);
 	if (!coords)
 		return (NULL);
-	if (coords && i + 1 < input.num_c)
-		coords->right = get_all_coordinates(input, ++i, j);
-	if (coords && j + 1 < input.num_l)
-		coords->down = get_all_coordinates(input, i, ++j);
+	if (coords && x + 1 < input.num_c)
+		coords->right = get_all_coordinates(input, ++x, y);
+	if (coords && y + 1 < input.num_l)
+		coords->down = get_all_coordinates(input, x, ++y);
 	return (coords);
 }
 
@@ -218,23 +217,34 @@ void	free_coordinates(t_coords *coords)
 
 int	main(int argc, char *argv[])
 {
-	t_coords	*coords;
-	size_t		num_l;
-	size_t		num_c;
-	char		*txt;
-	int			fd;
-
 	if (argc != 2)
 		return (1);
-	fd = open(argv[1], O_RDONLY);
-	txt = get_txt(fd);
-	if (!txt)
-		return (close(fd), FAILURE);
-	num_l = count_line(txt);
-	num_c = count_column(txt);
-	coords = get_all_coordinates((t_input){txt, num_l, num_c}, 0, 0);
+	int		fd = open(argv[1], O_RDONLY);
+	char	*txt = get_txt(fd);
+	char	*elem;
+	int		i, j;
+	size_t	y, x;
+	t_coords	*coords;
+
+	i = -1;
+	j = -1;
+	x = count_column(txt);
+	y = count_line(txt);
+	coords = get_all_coordinates((t_input){txt, y, x}, 0, 0);
+	// printf("%s\n", txt);
+	// while (++j < y)
+	// {
+	// 	i = -1;
+	// 	while (++i < x)
+	// 	{
+	// 		// elem = get_elem(txt, i, j);
+	// 		// printf("%s\n", elem);
+	// 		t_coords	*coords = get_coordinate((t_input){txt, y, x}, i, j);
+	// 		// printf("(x, y) = (%2d, %2d) :%2d\n", i + 1, j + 1, ft_atoi(elem));
+	// 	}
+	// }
+	free_coordinates(coords);
 	free(txt);
-	if (check_coordinates(coords, num_l, num_c))
-		return (close(fd), free_coordinates(coords), FAILURE);
-	return (close(fd), free_coordinates(coords), SUCCESS);
+	close(fd);
+	return (0);
 }
