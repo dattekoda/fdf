@@ -22,6 +22,13 @@
 # define WHITE_PIXEL 0xFFFFFF
 # define BLACK_PIXEL 0x000000
 
+typedef struct s_idx
+{
+	int	x;
+	int	y;
+}	t_idx;
+
+
 typedef struct s_rect
 {
 	int	x;
@@ -66,20 +73,13 @@ typedef struct s_square
 	int	g_y;
 }	t_square;
 
-typedef struct s_int_list
+typedef struct s_map
 {
 	int		**list;
+	int		**color;
 	size_t	x;
 	size_t	y;
-}	t_int_list;
-
-typedef struct s_data
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_img		img;
-	t_int_list	*list;
-}	t_data;
+}	t_map;
 
 //because parse map left upper to right bottom.
 typedef struct s_coords
@@ -99,17 +99,29 @@ typedef struct s_input
 	size_t	num_c; //x
 }	t_input;
 
+typedef struct s_color
+{
+	uint32_t	start;
+	uint32_t	goal;
+}	t_color;
+
+typedef struct s_data
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_img		img;
+	t_map	*map;
+}	t_data;
+
 char		*get_txt(int fd);
-char		*get_elem(char *txt, int x, int y);
-t_coords	*get_coordinate(t_input input, int i, int j);
-t_coords	*get_all_coordinates(t_input input, int i, int j);
-uint32_t	get_color(const char *elem, const char *base);
-int			have_color(char **elem);
-t_coords	*init_coords(int x, int y, char *elem);
 size_t		count_words(char *s, char c);
 size_t		count_line(char *txt);
 size_t		count_column(char *txt);
-int			check_coordinates(t_coords *coords, size_t num_l, size_t num_c);
-void		free_coordinates(t_coords *coords);
+int			have_color(char **elem);
+uint32_t	get_color(const char *elem, const char *base);
+char		*get_elem(char *txt, int x, int y);
+void		free_map(t_map *map);
+t_map		*init_map(char *txt);
+t_map		*get_map(char *txt);
 
 #endif

@@ -90,38 +90,6 @@ char	*get_elem(char *txt, int x, int y)
 	return (elem);
 }
 
-t_coords	*init_coords(int x, int y, char *elem)
-{
-	t_coords	*coords;
-
-	coords = malloc(sizeof(t_coords));
-	if (!coords)
-	return (NULL);
-	coords->right = NULL;
-	coords->down = NULL;
-	coords->x = x;
-	coords->y = y;
-	coords->z = ft_atoi(elem);
-	coords->color = 0x00FFFFFF;
-	if (have_color(&elem))
-		coords->color = get_color(elem, "0123456789abcdef");
-	return (coords);
-}
-
-t_coords	*get_coordinate(t_input input, int i, int j)
-{
-	t_coords	*coords;
-
-	coords = init_coords(i, j, get_elem(input.txt, i, j));
-	if (!coords)
-		return (NULL);
-	if (input.num_c != 0)
-		i = (i + 1) % input.num_c;
-	if (i == 0)
-		j++;
-	return (coords);
-}
-
 size_t	count_words(char *s, char c)
 {
 	size_t	count;
@@ -170,18 +138,61 @@ size_t	count_column(char *txt)
 	return (count);
 }
 
-t_coords	*get_all_coordinates(t_input input, int i, int j)
+t_coords	*get_coordinate(t_input input, int x, int y)
+{
+	t_coords	*coords;
+	char		*elem;
+
+	coords = malloc(sizeof(t_coords));
+	if (!coords)
+		return (NULL);
+	elem = get_elem(input.txt, x, y);
+	coords->right = NULL;
+	coords->down = NULL;
+	coords->x = x;
+	coords->y = y;
+	coords->z = ft_atoi(elem);
+	coords->color = 0x00FFFFFF;
+	if (have_color(&elem))
+		coords->color = get_color(elem, "0123456789abcdef");
+	return (coords);
+}
+
+// int	main(void)
+// {
+// 	t_coords	*coords = get_coordinate((t_input){"0 0 100\n0 0 100\n0 0 5\n0 0 8", 0, 0}, 2, 0);
+// 	printf("%4d, %4d, %4d\n", coords->x, coords->y, coords->z);
+// }
+
+t_coords	*get_behind_coordinate(t_input input, t_idx index, t_coords *r, t_coords *d)
 {
 	t_coords	*coords;
 
-	coords = get_coordinate(input, i, j);
-	if (!coords)
-		return (NULL);
-	if (coords && i + 1 < input.num_c)
-		coords->right = get_all_coordinates(input, ++i, j);
-	if (coords && j + 1 < input.num_l)
-		coords->down = get_all_coordinates(input, i, ++j);
+	coords = get_coordinate(input, index.x, index.y);
+	coords->right = r;
+	coords->down = d;
+	if (index.x >= 0 && index.y >= 0)
+	{
+		get_behind_coordinate(input, (t_idx){index.x, index.y - 1}, r, coords);
+		get_behind_coordinate(input, (t_idx){index.x - 1, index.y}, coords, d);
+	}
 	return (coords);
+}
+
+t_coords	*get_all_coordinates(t_input input)
+{
+	t_coords	*coords;
+
+	coords = get_behind_coordinate(input, (t_idx){input.num_c - 1, input.num_l - 1}, NULL, NULL);
+	return (coords);
+}
+
+int	main(void)
+{
+	t_coords	*coords;
+
+	coords = get_all_coordinates((t_input){"2 3 7\n1 5 2\n8 9 4", 3, 3});
+	return (0);
 }
 
 int	check_coordinates(t_coords *coords, size_t num_l, size_t num_c)
@@ -191,19 +202,23 @@ int	check_coordinates(t_coords *coords, size_t num_l, size_t num_c)
 	size_t		checker_c;
 
 	checker_l = 0;
-	checker_c = 0;
 	while (coords)
 	{
 		_coords = coords;
-		checker_l = 0;
+		checker_c = 0;
 		while (_coords)
+		{
+			printf("%2zu, %2zu, %2d, %2d, %2d\n", checker_c, checker_l, _coords->x, _coords->y, _coords->z);
 			_coords = (checker_c++, _coords->right);
-		if (checker_c != num_c)
+		}
+		if (checker_c != num_c - 1)
 			return (1);
 		coords = (checker_l++, coords->down);
 	}
-	if (checker_l != num_l)
+	if (checker_l != num_l - 1)
 		return (1);
+	printf("checker ok\n");
+	exit(1);
 	return (0);
 }
 
@@ -214,27 +229,4 @@ void	free_coordinates(t_coords *coords)
 	free_coordinates(coords->right);
 	free_coordinates(coords->down);
 	free(coords);
-}
-
-int	main(int argc, char *argv[])
-{
-	t_coords	*coords;
-	size_t		num_l;
-	size_t		num_c;
-	char		*txt;
-	int			fd;
-
-	if (argc != 2)
-		return (1);
-	fd = open(argv[1], O_RDONLY);
-	txt = get_txt(fd);
-	if (!txt)
-		return (close(fd), FAILURE);
-	num_l = count_line(txt);
-	num_c = count_column(txt);
-	coords = get_all_coordinates((t_input){txt, num_l, num_c}, 0, 0);
-	free(txt);
-	if (check_coordinates(coords, num_l, num_c))
-		return (close(fd), free_coordinates(coords), FAILURE);
-	return (close(fd), free_coordinates(coords), SUCCESS);
 }

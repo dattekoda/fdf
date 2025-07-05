@@ -58,7 +58,7 @@ static size_t	count_words(const char *s, char c)
 	return (count);
 }
 
-void	free_int_list(t_int_list *list, size_t point)
+void	free_int_list(t_map *list, size_t point)
 {
 	size_t	i;
 
@@ -69,11 +69,11 @@ void	free_int_list(t_int_list *list, size_t point)
 	free(list);
 }
 
-t_int_list	*init_int_list(char *txt)
+t_map	*init_map(char *txt)
 {
-	t_int_list	*list;
+	t_map	*list;
 
-	list = malloc(sizeof(t_int_list));
+	list = malloc(sizeof(t_map));
 	list->y = count_words(txt, '\n');
 	if (list->y == 0)
 		return (free(list), NULL);
@@ -84,15 +84,15 @@ t_int_list	*init_int_list(char *txt)
 	return (list);
 }
 
-t_int_list	*get_map(char *txt)
+t_map	*get_map(char *txt)
 {
-	t_int_list	*list;
+	t_map	*list;
 	size_t	i;
 	size_t	j;
 	char	**row;
 	char	**elems;
 
-	list = init_int_list(txt);
+	list = init_map(txt);
 	if (!list)
 		return (NULL);
 	row = ft_split(txt, '\n');
@@ -202,7 +202,7 @@ void	render_square(t_img *img, t_square point, int color)
 	render_line(img, (t_line){point.g_x, point.s_y, point.g_x, point.g_y}, color);
 }
 
-int	render(t_data *data, t_int_list *list)
+int	render(t_data *data, t_map *list)
 {
 	if (!data->win_ptr)
 		return (1);
@@ -214,7 +214,7 @@ int	render(t_data *data, t_int_list *list)
 	return (0);
 }
 
-int	show_screen(t_int_list *list)
+int	show_screen(t_map *list)
 {
 	t_data	data;
 
@@ -240,7 +240,7 @@ int	main(int argc, char *argv[])
 {
 	int			fd;
 	char		*txt;
-	t_int_list	*list;
+	t_map	*list;
 
 	if (argc != 2)
 		return (1);
