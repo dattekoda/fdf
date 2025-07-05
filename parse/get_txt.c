@@ -9,10 +9,8 @@ char	*get_txt(int fd)
 	ssize_t	n;
 
 	txt = ft_strdup("");
-	if (!txt)
-		return (NULL);
 	buf_size = 4096; //cpuが一回に読み込める最大量 getconf PAGE_SIZE
-	while (1)
+	while (txt)
 	{
 		buf = malloc(buf_size + 1);
 		if (!buf)
@@ -21,15 +19,13 @@ char	*get_txt(int fd)
 		if (n < 0)
 			return (free(txt), free(buf), NULL);
 		else if (n == 0)
-			break ;
+			return (free(buf), txt);
 		buf[n] = '\0';
 		tmp = txt;
-		txt = ft_strjoin(txt, buf);
+		txt = ft_strjoin(tmp, buf);
 		buf_size *= (free(tmp), free(buf), 2);
-		if (!txt)
-			break ;
 	}
-	return (free(buf), txt);
+	return (txt);
 }
 
 int	main(int argc, char *argv[])

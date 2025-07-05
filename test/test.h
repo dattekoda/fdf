@@ -112,6 +112,4 @@ size_t		count_column(char *txt);
 int			check_coordinates(t_coords *coords, size_t num_l, size_t num_c);
 void		free_coordinates(t_coords *coords);
 
-
-
 #endif
