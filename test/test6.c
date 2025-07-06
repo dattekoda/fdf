@@ -89,38 +89,24 @@ void	render_square(t_img *img, t_square point, int color)
 	render_line(img, (t_line){point.g_x, point.s_y, point.g_x, point.g_y}, (t_color){0xffffff, 0xffffff});
 }
 
-void	render_base(t_img *img, t_coords *coords)
-{
-	if (!coords)
-		return ;
-	if (coords->right)
-		render_line(img, (t_line){coords->x, coords->y, coords->right->x, coords->right->y},
-			(t_color){coords->color, coords->right->color});
-	if (coords->down)
-		render_line(img, (t_line){coords->x, coords->y, coords->down->x, coords->down->y},
-			(t_color){coords->color, coords->down->color});
-	render_base(img, coords->right);
-	render_base(img, coords->down);
-}
-
 int	render(t_data *data)
 {
 	if (!data->win_ptr)
 		return (1);
 	render_background(&data->img,BLU_PIXEL);
-	render_base(&data->img, data->coords);
+	render_base(&data->img, data->map);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	//4th and 5th arguments indicate the starting position (coordinates).
 	//Perhaps, you can use this as a zooming or moving functions.
 	return (0);
 }
 
-int	show_screen(t_coords *coords)
+int	show_screen(t_map *map)
 {
 	t_data	data;
 
 	printf("hi\n");
-	data.coords = coords;
+	data.map = map;
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (MLX_ERROR);
@@ -155,5 +141,5 @@ int	main(int argc, char *argv[])
 	map = get_map(txt);
 	if (!map)
 		return (FAILURE);
-	return (SUCCESS);
+	return (free_map(map), SUCCESS);
 }

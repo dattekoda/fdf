@@ -40,7 +40,7 @@ char	*get_txt(int fd)
 	return (buf);
 }
 
-static size_t	count_words(const char *s, char c)
+size_t	count_words(const char *s, char c)
 {
 	size_t	count;
 
@@ -214,11 +214,11 @@ int	render(t_data *data, t_map *list)
 	return (0);
 }
 
-int	show_screen(t_map *list)
+int	show_screen(t_map *map)
 {
 	t_data	data;
 
-	data.list = list;
+	data.map = map;
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (MLX_ERROR);

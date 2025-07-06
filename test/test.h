@@ -75,10 +75,10 @@ typedef struct s_square
 
 typedef struct s_map
 {
-	int		**list;
-	int		**color;
-	size_t	x;
-	size_t	y;
+	int				**list;
+	uint32_t		**color;
+	size_t			x;
+	size_t			y;
 }	t_map;
 
 //because parse map left upper to right bottom.
@@ -105,15 +105,34 @@ typedef struct s_color
 	uint32_t	goal;
 }	t_color;
 
+typedef struct s_cam
+{
+	double	zoom;
+	double	offset_x;
+	double	offset_y;
+	double	angle;
+}	t_cam;
+
+typedef	struct s_proj
+{
+	int			x;
+	int			y;
+	uint32_t	color;
+}	t_proj;
+
 typedef struct s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		img;
-	t_map	*map;
+	t_map		*map;
+	t_cam		cam;
+	t_proj		**proj;
+	int			changed;
 }	t_data;
 
 char		*get_txt(int fd);
+int			get_map(t_data *data, char *txt);
 size_t		count_words(char *s, char c);
 size_t		count_line(char *txt);
 size_t		count_column(char *txt);
@@ -122,6 +141,5 @@ uint32_t	get_color(const char *elem, const char *base);
 char		*get_elem(char *txt, int x, int y);
 void		free_map(t_map *map);
 t_map		*init_map(char *txt);
-t_map		*get_map(char *txt);
 
 #endif

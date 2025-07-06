@@ -183,7 +183,7 @@ t_map	*init_map(char *txt)
 	return (map);
 }
 
-t_map	*get_map(char *txt)
+int	get_map(t_data *data, char *txt)
 {
 	t_map	*map;
 	size_t	x;
@@ -191,8 +191,10 @@ t_map	*get_map(char *txt)
 	char	*elem;
 
 	map = init_map(txt);
+	if (!map)
+		return (FAILURE);
 	y = -1;
-	while (map && ++y < map->y)
+	while (++y < map->y)
 	{
 		x = -1;
 		while (++x < map->x)
@@ -204,28 +206,101 @@ t_map	*get_map(char *txt)
 				map->color[y][x] = get_color(elem, "0123456789abcdef");
 		}
 	}
-	return (map);
+	data->map = map;
+	return (SUCCESS);
 }
 
-// int	main(int argc, char *argv[])
-// {
-// 	t_map	*map;
-// 	char	*txt;
-// 	int		fd;
-// 	int		y = -1;
-// 	int		x;
+t_proj	**init_proj(t_data *data)
+{
+	t_proj	**proj;
+	int		y;
 
-// 	if (argc != 2)
-// 		return (1);
-// 	fd = open(argv[1], O_RDONLY);
-// 	txt = get_txt(fd);
-// 	map = get_map(txt);
-// 	while (++y < map->y)
-// 	{
-// 		x = -1;
-// 		while (++x < map->x)
-// 			printf("%2d,%2d: %d, %d\n", x, y, map->list[y][x], map->color[y][x]);
-// 	}
-// 	free_map(map);
-// 	return (0);
-// }
+	proj = malloc(data->map->y * sizeof(t_proj *));
+	y = -1;
+	while (proj && ++y < data->map->y)
+	{
+		proj[y] = malloc(data->map->x * sizeof(t_proj));
+		if (!proj[y])
+		{
+			while (y-- > -1)
+				free(proj[y]);
+			return (free(proj), NULL);
+		}
+	}
+	return (proj);
+}
+
+void	free_proj(t_proj **proj, t_map *map)
+{
+	int	y;
+
+	y = -1;
+	while (++y < map->y)
+		free(proj[y]);
+	free(proj);
+}
+
+int	get_proj(t_data *data)
+{
+	int	z;
+	int	y;
+	int	x;
+	double	sx;
+	double	sy;
+	t_proj	**proj;
+
+	proj = init_proj(data);
+	if (!proj)
+		return (FAILURE);
+	y = -1;
+	while (++y < data->map->y)
+	{
+		x = -1;
+		while (++x < data->map->x)
+		{
+			z = data->map->list[y][x];
+			sx = (x - y) * cos(data->cam.angle) * data->cam.zoom + data->cam.offset_x;
+			sy = (x + y) * sin(data->cam.angle) * data->cam.zoom +
+				z * data->cam.zoom + data->cam.offset_y;
+			proj[y][x].x = (int)sx;
+			proj[y][x].y = (int)sy;
+ 		}
+	}
+	data->proj = proj;
+	data->changed = 0;
+	return (SUCCESS);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_data	data;
+	char	*txt;
+	int		fd;
+	int		y = -1;
+	int		x;
+
+	data.cam.angle = 0.4;
+	data.cam.offset_x = WINDOW_WIDTH / 2;
+	data.cam.offset_y = WINDOW_HEIGHT / 2;
+	data.cam.zoom = 20;
+	if (argc != 2)
+		return (1);
+	fd = open(argv[1], O_RDONLY);
+	txt = get_txt(fd);
+	if (!txt)
+		return (FAILURE);
+	if (get_map(&data, txt))
+		return (free(txt), free_map(data.map), FAILURE);
+	free(txt);
+	if (get_proj(&data))
+		return (free_proj(data.proj, data.map), free_map(data.map), FAILURE);
+	while (++y < data.map->y)
+	{
+		x = -1;
+		while (++x < data.map->x)
+			printf("%2d,%2d: %d, %d\n", x, y, data.map->list[y][x], data.map->color[y][x]);
+	}
+	free_proj(data.proj, data.map);
+	free_map(data.map);
+	return (close(fd), 0);
+}
