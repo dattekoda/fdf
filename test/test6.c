@@ -126,7 +126,7 @@ int	show_screen(t_map *map)
 
 int	main(int argc, char *argv[])
 {
-	t_map	*map;
+	t_map		*map;
 	char		*txt;
 	int			fd;
 
