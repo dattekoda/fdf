@@ -298,7 +298,7 @@ int	main(int argc, char *argv[])
 	{
 		x = -1;
 		while (++x < data.map->x)
-			printf("%2d,%2d: %d, %d\n", x, y, data.map->list[y][x], data.map->color[y][x]);
+			printf("%2d,%2d: %3d, %9d\n", x, y, data.map->list[y][x], data.map->color[y][x]);
 	}
 	free_proj(data.proj, data.map);
 	free_map(data.map);

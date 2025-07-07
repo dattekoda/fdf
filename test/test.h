@@ -67,10 +67,14 @@ typedef struct s_line
 typedef struct s_square
 {
 	// int	grad;
-	int	s_x;
-	int	s_y;
-	int	g_x;
-	int	g_y;
+	int	a_x;
+	int	a_y;
+	int	b_x;
+	int	b_y;
+	int	c_x;
+	int	c_y;
+	int	d_x;
+	int	d_y;
 }	t_square;
 
 typedef struct s_map
