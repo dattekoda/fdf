@@ -1,20 +1,24 @@
-#include "test.h"
+#include "../test.h"
 
-int	handle_keypress(int	keysym, t_data *data)
+typedef struct s_coords
+{
+	int	x;
+	int	y;
+}	t_coords;
+
+int		handle_keypress(int keysym, t_data *data);
+void	img_pix_put(t_img *img, int x, int y, int color);
+void	render_background(t_img *img, int color);
+int		render(t_data *data);
+int		show_screen(void);
+
+int	handle_keypress(int keysym, t_data *data)
 {
 	if (keysym == XK_Escape)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
 	}
-	// if (keysym == XK_A)
-	// {
-	// 	描写を左にずらす。
-	// }
-	// if (keysym == XK_D)
-	// {
-	// 	描写を右にずらす。
-	// }
 	return (0);
 }
 
@@ -24,19 +28,6 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(int *)pixel = color;
-}
-
-void	render_point(t_img *img, int color)
-{
-	int	**fdf;
-	int	size_x;
-	int	size_y;
-
-	size_x = 3;
-	size_y = 2;
-	fdf = ft_calloc(size_y, sizeof(int *));
-	fdf[0] = ft_calloc(size_x, sizeof(int));
-	fdf[1] = ft_calloc(size_x, sizeof(int));
 }
 
 void	render_background(t_img *img, int color)
@@ -54,43 +45,13 @@ void	render_background(t_img *img, int color)
 	}
 }
 
-void	render_line(t_img *img, t_line line, t_color color)
-{
-	int	i;
-	int	j;
-	int	func;
-	int	i_limit;
-	int	j_limit;
-	uint32_t	grad;
-	uint32_t	delta;
-
-	i = line.s_y < line.g_y ? line.s_y : line.g_y;
-	i_limit = line.s_y < line.g_y ? line.g_y : line.s_y;
-	j_limit = line.s_x < line.g_x ? line.g_x : line.s_x;
-	grad = color.start;
-	while (i <= i_limit)
-	{
-		j = line.s_x < line.g_x ? line.s_x : line.g_x;
-		while (j <= j_limit)
-		{
-			func = (i - line.s_y) * (line.g_x - line.s_x) - (j - line.s_x) * (line.g_y - line.s_y);
-			if (abs(func) < 300) //オーバーフローケアするように要修正。
-				img_pix_put(img, j, i, grad);
-			j++;
-		}
-		i++;
-	}
-}
-
 int	render(t_data *data)
 {
 	if (!data->win_ptr)
 		return (1);
-	render_background(&data->img,BLU_PIXEL);
+	render_background(&data->img, BLU_PIXEL);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
-	//4th and 5th arguments indicate the starting position (coordinates).
-	//Perhaps, you can use this as a zooming or moving functions.
-	return (0);
+	return (SUCCESS);
 }
 
 int	show_screen(void)
@@ -111,10 +72,13 @@ int	show_screen(void)
 	mlx_loop(data.mlx_ptr);
 	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	mlx_destroy_display(data.mlx_ptr);
-	return (free(data.mlx_ptr), 0);
+	return (free(data.mlx_ptr), SUCCESS);
 }
 
 int	main(void)
 {
+	int	dx;
+	int	dy;
+
 	return (show_screen());
 }

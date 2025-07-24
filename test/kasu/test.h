@@ -9,8 +9,8 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <stdint.h>
-# include "../minilibx/mlx.h"
-# include "../libft/includes/libft.h"
+# include "minilibx/mlx.h"
+# include "libft/includes/libft.h"
 # define FAILURE 1
 # define SUCCESS 0
 # define WINDOW_WIDTH 1920
@@ -47,15 +47,6 @@ typedef struct s_cir
 	int	color;
 }	t_cir;
 
-typedef struct s_img
-{
-	void	*mlx_img;
-	char	*addr;
-	int		bpp; //bits per pixel
-	int		line_len;
-	int		endian;
-}	t_img;
-
 typedef struct s_line
 {
 	int	s_x;
@@ -86,15 +77,15 @@ typedef struct s_map
 }	t_map;
 
 //because parse map left upper to right bottom.
-typedef struct s_coords
-{
-	int				x;
-	int				y;
-	int				z;
-	uint32_t		color;
-	struct s_coords *right;
-	struct s_coords *down;
-}	t_coords;
+// typedef struct s_coords
+// {
+// 	int				x;
+// 	int				y;
+// 	int				z;
+// 	uint32_t		color;
+// 	struct s_coords *right;
+// 	struct s_coords *down;
+// }	t_coords;
 
 typedef struct s_input
 {
@@ -123,6 +114,15 @@ typedef	struct s_proj
 	int			y;
 	uint32_t	color;
 }	t_proj;
+
+typedef struct s_img
+{
+	void	*mlx_img;
+	char	*addr;
+	int		bpp; //bits per pixel
+	int		line_len;
+	int		endian;
+}	t_img;
 
 typedef struct s_data
 {
