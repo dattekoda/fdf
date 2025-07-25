@@ -170,13 +170,30 @@ void	slope_bigger_than_one(int dx, int dy, t_point *a)
 	}
 }
 
-int	drawing_line(t_img *img)
+void	set_start_goal(t_point *a, t_point *b, t_point *start, t_point *goal)
+{
+	if (a->x < b->x)
+	{
+		start->x = a->x;
+		start->y = a->y;
+		goal->x = b->x;
+		goal->y = b->y;
+	}
+	else
+	{
+		start->x = b->x;
+		start->y = b->y;
+		goal->x = a->x;
+		goal->y = a->y;
+	}
+}
+
+int	drawing_line(t_img *img, t_point *a, t_point *b)
 {
 	int	dx;
 	int	dy;
-	t_point	a = {0, 0};
-	t_point b = {732, 25};
+	t_point	start;
+	t_point goal;
 
-	dx = ft_abs(b.x - a.x);
-	dy = ft_abs(a.y - b.y);
+	set_start_goal(a, b, &start, &goal);
 }
