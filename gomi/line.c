@@ -1,12 +1,43 @@
 #include "libft.h"
-#include "mlx.h"
+#include "../minilibx_mac/mlx.h"
 #include <stdio.h>
+#include <X11/X.h>
+#include <X11/keysym.h>
+
+// #define ESC_KEY 65307
+// #define UP_KEY 65362
+// #define DOWN_KEY 65364
+// #define RIGHT_KEY 65363
+// #define LEFT_KEY 65361
+// #define Q_KEY 113
+// #define W_KEY 119
+// #define A_KEY 97
+// #define S_KEY 115
+// #define D_KEY 100
+// #define Z_KEY 122
+
+// macos_key
+#define ESC_KEY 53
+#define UP_KEY 126
+#define DOWN_KEY 125
+#define RIGHT_KEY 124
+#define LEFT_KEY 123
+#define Q_KEY 12
+#define W_KEY 13
+#define A_KEY 0
+#define S_KEY 1
+#define D_KEY 2
+#define Z_KEY 6
 
 #define ERR 1
 #define SUCCESS 0
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
+
+#define R_COLOR 0xFF0000
+#define G_COLOR 0x00FF00
+#define B_COLOR 0x0000FF
 
 typedef struct s_point
 {
@@ -27,13 +58,57 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	t_data	*img;
 }	t_data;
+
+void	render_background(t_img *img, int color)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < WINDOW_HEIGHT)
+	{
+		j = -1;
+		while (++j < WINDOW_WIDTH)
+			img_pix_put(img, j, i, color);
+	}
+}
+
+int	render(t_data *data)
+{
+	if (!data->win_ptr)
+		return (ERR);
+	render_background(&data->img, B_COLOR);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			data->img->mlx_img, 0, 0);
+	return (SUCCESS);
+}
+
+int	handle_keypress(int keysym, t_data *data)
+{
+	if (keysym == ESC_KEY)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		data->win_ptr = NULL;
+	}
+	return (SUCCESS);
+}
+
+void	img_pix_put(t_img *img, int x, int y, int color)
+{
+	char	*pixel;
+
+	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	*(int *)pixel = color;
+}
 
 int	main(void)
 {
 	t_data	data;
 	t_img	img;
 
+	data.img = &img;
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (ERR);
@@ -44,7 +119,7 @@ int	main(void)
 	img.addr = mlx_get_data_addr(data.mlx_ptr, &img.bpp,
 			&img.line_len, &img.endian);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &hendle_keypress, &data);
+	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
 	mlx_loop(data.mlx_ptr);
 	mlx_destroy_image(data.mlx_ptr, img.mlx_img);
 	mlx_destroy_display(data.mlx_ptr);
