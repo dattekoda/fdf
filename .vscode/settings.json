@@ -2,6 +2,8 @@
 	"files.associations": {
 		"libft.h": "c",
 		"test.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"jikken.h": "c",
+		"map.h": "c"
 	}
 }
