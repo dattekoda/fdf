@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+// linux
 #define ESC_KEY 65307
 #define UP_KEY 65362
 #define DOWN_KEY 65364
@@ -14,6 +15,10 @@
 #define S_KEY 115
 #define D_KEY 100
 #define Z_KEY 122
+#define RED_COLOR 0x00FF0000
+#define GREEN_COLOR 0x0000FF00
+#define BLUE_COLOR 0x000000FF
+#define WH_COLOR 0x00FFFFFF
 
 // macos_key
 // #define ESC_KEY 53
@@ -27,17 +32,16 @@
 // #define S_KEY 1
 // #define D_KEY 2
 // #define Z_KEY 6
+// #define RED_COLOR 0x00FF0000
+// #define GREEN_COLOR 0x0000FF00
+// #define BLUE_COLOR 0x000000FF
+// #define WH_COLOR 0x00FFFFFF
 
 #define ERR 1
 #define SUCCESS 0
 
-#define WINDOW_WIDTH 1000
-#define WINDOW_HEIGHT 700
-
-#define RED_COLOR 0xFF0000
-#define GREEN_COLOR 0x00FF00
-#define BLUE_COLOR 0x0000FF
-#define WH_COLOR 0xFFFFFF
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 675
 
 #ifndef KeyPress
 # define KeyPress 2
@@ -81,8 +85,22 @@ void	img_put_pix(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
 
+	if (x < 0 || WINDOW_WIDTH < x || y < 0 || WINDOW_HEIGHT < y)
+		return ;
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(int *)pixel = color;
+	if (img->endian) // big endian
+	{
+		pixel[0] = (color >> 24) & 0xFF; //A
+		pixel[1] = (color >> 16) & 0xFF; //R
+		pixel[2] = (color >> 8) & 0xFF; //G
+		pixel[3] = color & 0xFF; //B
+		return ;
+	}
+	// little endian
+	pixel[0] = color & 0xFF; //B
+	pixel[1] = (color >> 8) & 0xFF; //G
+	pixel[2] = (color >> 16) & 0xFF; //R
+	pixel[3] = (color >> 24) & 0xFF; //A
 }
 
 void	render_horizontal_vertical(t_img *img, t_line *line, int color)
@@ -237,6 +255,7 @@ int	main(int argc, char **argv)
 	img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	img.addr = mlx_get_data_addr(img.mlx_img, &img.bpp,
 			&img.line_len, &img.endian);
+	// printf("bpp=%d line_len=%d endian=%d\n", img.bpp, img.line_len, img.endian);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
 	mlx_loop(data.mlx_ptr);
