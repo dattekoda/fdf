@@ -4,9 +4,9 @@ void	img_put_pix(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
 
-	if (x < 0 || WINDOW_WIDTH < x || y < 0 || WINDOW_HEIGHT < y)
-		return ;
-	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	pixel = NULL;
+	if (0 <= x && x <= WINDOW_WIDTH && 0 <= y && y <= WINDOW_HEIGHT)
+		pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	if (img->endian) // big endian
 	{
 		pixel[0] = (color >> 24) & 0xFF; //A

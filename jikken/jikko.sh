@@ -12,7 +12,7 @@ if [[ "$UNAME" == "Darwin" ]]; then
 elif [[ "$UNAME" == "Linux" ]]; then
     # Linux (Ubuntu)
     MLX_DIR="../minilibx"
-    MLX_FLAGS="-lX11 -lXext -lm"
+    MLX_FLAGS="-lX11 -lXext"
 else
 	echo "Unsupported OS: $UNAME" >&2
 	exit 1
@@ -46,5 +46,5 @@ make re -C "$LIBFT_DIR"
 # --- コンパイル実行 ---
 cc $CFLAGS "${SRC[@]}" "$LIBFT_A" \
     -I"$INC" -I"$MLX_DIR" \
-    -L"$MLX_DIR" -lmlx $MLX_FLAGS \
+    -L"$MLX_DIR" -lmlx -lm $MLX_FLAGS \
     -o "$OUT"

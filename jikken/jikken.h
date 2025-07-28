@@ -9,44 +9,46 @@
 #include <fcntl.h>
 
 // linux
-#define ESC_KEY 65307
-#define UP_KEY 65362
-#define DOWN_KEY 65364
-#define RIGHT_KEY 65363
-#define LEFT_KEY 65361
-#define Q_KEY 113
-#define W_KEY 119
-#define A_KEY 97
-#define S_KEY 115
-#define D_KEY 100
-#define Z_KEY 122
-#define RED_COLOR 0x00FF0000
-#define GREEN_COLOR 0x0000FF00
-#define BLUE_COLOR 0x000000FF
-#define WH_COLOR 0x00FFFFFF
-
-// macos_key
-// #define ESC_KEY 53
-// #define UP_KEY 126
-// #define DOWN_KEY 125
-// #define RIGHT_KEY 124
-// #define LEFT_KEY 123
-// #define Q_KEY 12
-// #define W_KEY 13
-// #define A_KEY 0
-// #define S_KEY 1
-// #define D_KEY 2
-// #define Z_KEY 6
+// #define ESC_KEY 65307
+// #define UP_KEY 65362
+// #define DOWN_KEY 65364
+// #define RIGHT_KEY 65363
+// #define LEFT_KEY 65361
+// #define Q_KEY 113
+// #define W_KEY 119
+// #define A_KEY 97
+// #define S_KEY 115
+// #define D_KEY 100
+// #define Z_KEY 122
 // #define RED_COLOR 0x00FF0000
 // #define GREEN_COLOR 0x0000FF00
 // #define BLUE_COLOR 0x000000FF
 // #define WH_COLOR 0x00FFFFFF
 
+// macos_key
+#define ESC_KEY 53
+#define UP_KEY 126
+#define DOWN_KEY 125
+#define RIGHT_KEY 124
+#define LEFT_KEY 123
+#define Q_KEY 12
+#define W_KEY 13
+#define A_KEY 0
+#define S_KEY 1
+#define D_KEY 2
+#define Z_KEY 6
+#define RED_COLOR 0x00FF0000
+#define GREEN_COLOR 0x0000FF00
+#define BLUE_COLOR 0x000000FF
+#define WH_COLOR 0x00FFFFFF
+
 #define ERR 1
 #define SUCCESS 0
 
-#define WINDOW_WIDTH 1200
-#define WINDOW_HEIGHT 1200
+#define WINDOW_TITLE "fdf"
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
 #define THETA_DEFAULT 0.42
 #define ZOOM_DEFAULT 42
