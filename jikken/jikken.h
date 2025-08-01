@@ -20,10 +20,6 @@
 // #define S_KEY 115
 // #define D_KEY 100
 // #define Z_KEY 122
-// #define RED_COLOR 0x00FF0000
-// #define GREEN_COLOR 0x0000FF00
-// #define BLUE_COLOR 0x000000FF
-// #define WH_COLOR 0x00FFFFFF
 
 // macos_key
 #define ESC_KEY 53
@@ -37,10 +33,13 @@
 #define S_KEY 1
 #define D_KEY 2
 #define Z_KEY 6
+
+// color
 #define RED_COLOR 0x00FF0000
 #define GREEN_COLOR 0x0000FF00
 #define BLUE_COLOR 0x000000FF
 #define WH_COLOR 0x00FFFFFF
+#define BACK_GROUND 0x00555555
 
 #define ERR 1
 #define SUCCESS 0
@@ -80,7 +79,7 @@ typedef struct s_line
 typedef struct s_img
 {
 	void	*mlx_img;
-	void	*addr;
+	char	*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
@@ -88,9 +87,10 @@ typedef struct s_img
 
 typedef struct s_map
 {
-	int	width;
-	int	height;
-	int	**map;
+	int		width;
+	int		height;
+	int		**map;
+	char	**map_color;
 }	t_map;
 
 typedef struct s_move

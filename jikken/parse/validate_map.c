@@ -97,9 +97,18 @@ static int	get_map(t_map *map, char **sp_map)
 		}
 		x = -1;
 		while (++x < map->width)
+		{
 			map->map[y][x] = ft_atoi(sp_map[y * map->width + x]);
+			if (sp_map[y * map->width + x], ',')
 	}
 	return (0);
+}
+
+void	set_map(int	*map_map, char *map_col, char *sp)
+{
+	*map_map = ft_atoi(sp);
+	if ((sp = ft_strchr(sp, ',')))
+		map_col
 }
 
 // int	main(int argc, char **argv)

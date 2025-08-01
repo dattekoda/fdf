@@ -7,11 +7,11 @@ set -e  # コケたら即終了
 UNAME=$(uname)
 if [[ "$UNAME" == "Darwin" ]]; then
     # macOS
-    MLX_DIR="../minilibx_mac"
+    MLX_DIR="minilibx_macos"
     MLX_FLAGS="-framework OpenGL -framework AppKit"
 elif [[ "$UNAME" == "Linux" ]]; then
     # Linux (Ubuntu)
-    MLX_DIR="../minilibx"
+    MLX_DIR="minilibx"
     MLX_FLAGS="-lX11 -lXext"
 else
 	echo "Unsupported OS: $UNAME" >&2
@@ -19,11 +19,12 @@ else
 fi
 
 # --- 共通設定 ---
-LIBFT_DIR="../libft"
+LIBFT_DIR="libft"
 LIBFT_A="$LIBFT_DIR/libft.a"
 INC="$LIBFT_DIR/includes"
 CFLAGS="-Wall -Wextra -Werror"
 OUT="test"
+MLX_A="$MLX_DIR/libmlx.a"
 
 # --- 引数パース ---
 if [ $# -lt 1 ]; then
@@ -42,6 +43,7 @@ done
 
 # --- libft をビルド ---
 make re -C "$LIBFT_DIR"
+make re -C "$MLX_DIR"
 
 # --- コンパイル実行 ---
 cc $CFLAGS "${SRC[@]}" "$LIBFT_A" \
