@@ -6,14 +6,13 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 12:52:23 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/05 07:03:47 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 03:26:49 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdbool.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <limits.h>
@@ -28,9 +27,9 @@
 
 typedef struct s_gnl
 {
-	char	*str;
-	size_t	head;
-	size_t	tail;
+	char		*str;
+	size_t		head;
+	size_t		tail;
 }	t_gnl;
 
 typedef struct s_list

@@ -1,0 +1,117 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/06 03:05:05 by khanadat          #+#    #+#             */
+/*   Updated: 2025/08/06 03:18:23 by khanadat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef UTILS_H
+# define UTILS_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 16384
+# endif
+
+# include "libft.h"
+# include "mlx.h"
+# include <stdbool.h>
+# include <stdio.h>
+# include <math.h>
+# include <fcntl.h>
+
+// color
+# define WH_COLOR 0x00FFFFFF
+# define BACK_GROUND 0x00000000
+
+# define ERR 1
+# define SUCCESS 0
+# define WINDOW_TITLE "fdf"
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 800
+# define THETA_DEFAULT 0.42
+
+# define KEYPRESS 2
+# define KEYPRESSMASK 1L
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+	int	color;
+}	t_point;
+
+typedef struct s_line
+{
+	t_point	*s;
+	t_point	*g;
+	t_point	*d;
+}	t_line;
+
+typedef struct s_img
+{
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
+
+typedef struct s_map
+{
+	int		width;
+	int		height;
+	int		*map;
+	int		*map_color;
+}	t_map;
+
+typedef struct s_move
+{
+	double	x_theta;
+	double	y_theta;
+	double	z_theta;
+	double	altitude;
+	int		zoom;
+	int		lr;
+	int		ud;
+}	t_move;
+
+typedef struct s_data
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	*img;
+	char	**argv;
+	t_map	*map;
+	t_move	*move;
+}	t_data;
+
+// color.c
+int		calc_color(t_line *line, t_point current, bool big);
+
+// free.c
+void	free_fdf(t_data	*data);
+
+// render.c
+void	img_put_pix(t_img *img, int x, int y, int color);
+void	fdf(t_data *data);
+
+// line.c
+void	draw_line(t_img *img, t_point a, t_point b);
+
+// parse/validate_map.c
+int		validate_map(char *file, t_map *map);
+void	free_map(t_map *map);
+
+// draw_map.c
+void	draw_map(t_img *img, t_map *map, t_move *move);
+
+// set.c
+int		set_data(t_data *data, char *file);
+t_move	set_move(t_map *map);
+
+#endif

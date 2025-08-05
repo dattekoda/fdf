@@ -22,7 +22,7 @@ fi
 LIBFT_DIR="libft"
 LIBFT_A="$LIBFT_DIR/libft.a"
 INC="$LIBFT_DIR/includes"
-CFLAGS="-Wall -Wextra -Werror"
+CFLAGS="-Wall -Wextra -Werror -I inc"
 OUT="test"
 MLX_A="$MLX_DIR/libmlx.a"
 
@@ -42,7 +42,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # --- libft をビルド ---
-make re -C "$LIBFT_DIR"
+make rebonus -C "$LIBFT_DIR"
 make re -C "$MLX_DIR"
 
 # --- コンパイル実行 ---
