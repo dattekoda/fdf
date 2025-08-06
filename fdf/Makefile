@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/08/06 20:03:40 by khanadat          #+#    #+#              #
+#    Updated: 2025/08/06 20:03:41 by khanadat         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I inc
+CFLAGS = -Wall -Wextra -Werror -I incs
 RM = rm -rf
 
 LIBFT_DIR = libft

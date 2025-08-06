@@ -22,7 +22,7 @@ fi
 LIBFT_DIR="libft"
 LIBFT_A="$LIBFT_DIR/libft.a"
 INC="$LIBFT_DIR/includes"
-CFLAGS="-Wall -Wextra -Werror -I inc"
+CFLAGS="-Wall -Wextra -Werror -I incs"
 OUT="test"
 MLX_A="$MLX_DIR/libmlx.a"
 
