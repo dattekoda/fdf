@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:54:41 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 02:47:56 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:48:09 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static int	read_file(t_list **lst, size_t *len, char *file, t_map *map)
 		gnl = ft_get_next_line(fd, &line);
 		if (gnl < 0)
 			return (close(fd), ft_lstclear(lst, free), 1);
+		else if (gnl == 0)
+			break ;
 		ft_lstadd_back(lst, ft_lstnew(line));
 		*len += ft_strlen(line) + 1;
 		(map->height)++;
@@ -131,14 +133,15 @@ static int	get_map(t_map *map, char **sp_map)
 // 			printf("%d ", map.map[y * map.width + x]);
 // 		printf("\n");
 // 	}
-// 	y = -1;
-// 	while (++y < map.height)
-// 	{
-// 		x = -1;
-// 		while (++x < map.width)
-// 			printf("%d ", map.map_color[y * map.width + x]);
-// 		printf("\n");
-// 	}
+// 	printf("height: %d\n", map.height);
+// 	// y = -1;
+// 	// while (++y < map.height)
+// 	// {
+// 	// 	x = -1;
+// 	// 	while (++x < map.width)
+// 	// 		printf("%d ", map.map_color[y * map.width + x]);
+// 	// 	printf("\n");
+// 	// }
 // 	free_map(&map);
 // 	return (0);
 // }
