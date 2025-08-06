@@ -6,7 +6,7 @@
 #    By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/06 20:03:40 by khanadat          #+#    #+#              #
-#    Updated: 2025/08/06 20:03:41 by khanadat         ###   ########.fr        #
+#    Updated: 2025/08/06 20:16:00 by khanadat         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ifeq ($(UNAME),Darwin)
 	MLX_DIR := minilibx_macos
 	MLX_FLAGS := -framework OpenGL -framework AppKit
 else ifeq ($(UNAME),Linux)
-	MLX_DIR := minilibx
+	MLX_DIR := minilibx-linux
 	MLX_FLAGS := -lX11 -lXext
 else
 	$(error Unsupported OS: $(UNAME))
