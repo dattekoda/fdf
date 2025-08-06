@@ -16,6 +16,11 @@
 		"algorithm": "cpp",
 		"cmath": "cpp",
 		"complex": "cpp",
-		"new": "cpp"
+		"new": "cpp",
+		"stdint.h": "c",
+		"unistd.h": "c",
+		"stdlib.h": "c",
+		"stddef.h": "c",
+		"mlx.h": "c"
 	}
 }

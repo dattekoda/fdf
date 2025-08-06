@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 03:08:46 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 13:18:55 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:30:15 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,6 @@
 // # define MINUS_KEY 27
 // # define COMMA_KEY 43 // <
 // # define DOT_KEY 47 // >
-
-# define ZOOM_DEFAULT 3000
-# define DELTA_THETA 0.03
-# define DELTA_ALTITUDE 0.002
-# define DELTA_ZOOM 2
-# define DELTA_LR 4
-# define DELTA_UD 4
 
 // keypress.c
 void	move_camera(int keysym, t_data *data);

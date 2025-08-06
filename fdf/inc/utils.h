@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 03:05:05 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 13:54:55 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:38:17 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define UTILS_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 16384
+#  define BUFFER_SIZE 4096
 # endif
 
 # include "libft.h"
@@ -26,17 +26,24 @@
 
 // color
 # define WH_COLOR 0x00FFFFFF
-# define BACK_GROUND 0x00000000
+# define LINE_COLOR 0x00FFFFFF
+# define BACK_GROUND 0x00444444
 
 # define ERR 1
 # define SUCCESS 0
 # define WINDOW_TITLE "fdf"
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 800
+# define WINDOW_WIDTH 1900
+# define WINDOW_HEIGHT 1000
 # define THETA_DEFAULT 0.42
 
 # define KEYPRESS 2
 # define KEYPRESSMASK 1L
+
+# define DELTA_THETA 0.03
+# define DELTA_ALTITUDE 0.002
+# define DELTA_ZOOM 2
+# define DELTA_LR 4
+# define DELTA_UD 4
 
 typedef struct s_point
 {

@@ -6,31 +6,26 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 02:57:58 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 02:58:11 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:01:11 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
-void	free_split(char **sp)
-{
-	char	**_sp;
-
-	_sp = sp;
-	while (*_sp)
-		free(*_sp++);
-	free(sp);
-}
-
-int	count_elems(char **sp)
+int	count_elems(char *line)
 {
 	int	count;
 
 	count = 0;
-	while (*sp)
+	while (*line)
 	{
+		while (*line && *line == ' ')
+			line++;
+		if (!*line)
+			break ;
 		count++;
-		sp++;
+		while (*line && *line != ' ')
+			line++;
 	}
 	return (count);
 }

@@ -6,15 +6,15 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 00:29:24 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 14:49:43 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:29:20 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-static 		t_point	change(t_point p, t_move *move, t_map *map);
-static void	calc_rotate(double *a, double *b, double theta, t_point genten);
-static int	calc_isometric(t_map *map, t_move *move);
+static t_point	calc_all(t_point p, t_move *move, t_map *map);
+static void		calc_rotate(double *a, double *b, double theta, t_point genten);
+static int		calc_isometric(t_map *map, t_move *move);
 
 int	draw_map(t_img *img, t_map *map, t_move *move)
 {
@@ -55,23 +55,12 @@ static int	calc_isometric(t_map *map, t_move *move)
 	{
 		x = -1;
 		while (++x < map->width)
-			*(isom++) = change((t_point){x, y, *(col++)}, move, map);
+			*(isom++) = calc_all((t_point){x, y, *(col++)}, move, map);
 	}
 	return (0);
 }
 
-static void	calc_rotate(double *a, double *b, double theta, t_point genten)
-{
-	double	tmp;
-
-	tmp = *a;
-	*a = *a * cos(theta) - *b * sin(theta)
-		+ genten.x * (1 - cos(theta)) + genten.y * sin(theta);
-	*b = tmp * sin(theta) + *b * cos(theta)
-		+ genten.y * (1 - cos(theta)) - genten.x * sin(theta);
-}
-
-static t_point	change(t_point p, t_move *move, t_map *map)
+static t_point	calc_all(t_point p, t_move *move, t_map *map)
 {
 	double	_x;
 	double	_y;
@@ -92,4 +81,15 @@ static t_point	change(t_point p, t_move *move, t_map *map)
 	_x += move->lr;
 	_y += move->ud;
 	return ((t_point){(int)_x, (int)_y, p.color});
+}
+
+static void	calc_rotate(double *a, double *b, double theta, t_point genten)
+{
+	double	tmp;
+
+	tmp = *a;
+	*a = *a * cos(theta) - *b * sin(theta)
+		+ genten.x * (1 - cos(theta)) + genten.y * sin(theta);
+	*b = tmp * sin(theta) + *b * cos(theta)
+		+ genten.y * (1 - cos(theta)) - genten.x * sin(theta);
 }
