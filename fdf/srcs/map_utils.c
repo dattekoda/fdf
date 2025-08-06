@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 02:57:58 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 17:01:11 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:56:27 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	count_elems(char *line)
 	{
 		while (*line && *line == ' ')
 			line++;
-		if (!*line)
+		if (!*line || *line == '\n')
 			break ;
 		count++;
 		while (*line && *line != ' ')

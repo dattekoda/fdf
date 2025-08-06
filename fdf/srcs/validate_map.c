@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:54:41 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 17:34:09 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:58:33 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	get_one_line(t_map *map, char *line, int y)
 		map->map_color[idx] = LINE_COLOR;
 		tmp = ft_strchr(elem, ',');
 		elem = ft_strchr(elem, ' ');
-		if (tmp && tmp < elem)
+		if (tmp && ((elem && tmp < elem) || !elem))
 			map->map_color[idx] = hex(tmp + 1, ELEMSET);
 	}
 }
