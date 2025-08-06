@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:54:41 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 12:48:09 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:27:31 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ static int	read_file(t_list **lst, size_t *len, char *file, t_map *map)
 		gnl = ft_get_next_line(fd, &line);
 		if (gnl < 0)
 			return (close(fd), ft_lstclear(lst, free), 1);
-		else if (gnl == 0)
+		if (!*line)
+		{
+			free(line);
 			break ;
+		}
 		ft_lstadd_back(lst, ft_lstnew(line));
 		*len += ft_strlen(line) + 1;
 		(map->height)++;

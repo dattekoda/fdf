@@ -6,37 +6,58 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 00:29:24 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 00:30:28 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:49:43 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-static t_point	change(t_point p, t_move *move, t_map *map);
+static 		t_point	change(t_point p, t_move *move, t_map *map);
+static void	calc_rotate(double *a, double *b, double theta, t_point genten);
+static int	calc_isometric(t_map *map, t_move *move);
 
-void	draw_map(t_img *img, t_map *map, t_move *move)
+int	draw_map(t_img *img, t_map *map, t_move *move)
 {
-	int		x;
-	int		y;
-	int		*s_col;
-	t_point	start;
-	int		*col;
+	int	x;
+	int	y;
+	int	idx;
 
 	y = -1;
-	col = map->map_color;
+	if (calc_isometric(map, move))
+		return (1);
 	while (++y < map->height - 1)
 	{
 		x = -1;
 		while (++x < map->width - 1)
 		{
-			s_col = &col[y * map->width + x];
-			start = change((t_point){x, y, *s_col}, move, map);
-			draw_line(img, start,
-				change((t_point){x + 1, y, *(s_col + 1)}, move, map));
-			draw_line(img, start,
-				change((t_point){x, y + 1, *(s_col + map->width)}, move, map));
+			idx = y * map->width + x;
+			draw_line(img, map->isom_map[idx], map->isom_map[idx + 1]);
+			draw_line(img, map->isom_map[idx], map->isom_map[idx + map->width]);
 		}
 	}
+	return (0);
+}
+
+static int	calc_isometric(t_map *map, t_move *move)
+{
+	int		x;
+	int		y;
+	int		*col;
+	t_point	*isom;
+
+	map->isom_map = malloc(sizeof(t_point) * map->height * map->width);
+	if (!map->isom_map)
+		return (1);
+	y = -1;
+	col = map->map_color;
+	isom = map->isom_map;
+	while (++y < map->height)
+	{
+		x = -1;
+		while (++x < map->width)
+			*(isom++) = change((t_point){x, y, *(col++)}, move, map);
+	}
+	return (0);
 }
 
 static void	calc_rotate(double *a, double *b, double theta, t_point genten)

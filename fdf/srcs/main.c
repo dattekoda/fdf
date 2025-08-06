@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 00:31:40 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 02:57:17 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:51:14 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ int	main(int argc, char **argv)
 	if (set_data(&data, argv[1]))
 		return (1);
 	fdf(&data);
-	return (free_map(&map), 1);
+	return (free_map(&map), free(map.isom_map), 1);
 }

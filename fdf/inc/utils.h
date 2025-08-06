@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 03:05:05 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 03:18:23 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:54:55 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_map
 	int		height;
 	int		*map;
 	int		*map_color;
+	t_point	*isom_map;
 }	t_map;
 
 typedef struct s_move
@@ -108,7 +109,7 @@ int		validate_map(char *file, t_map *map);
 void	free_map(t_map *map);
 
 // draw_map.c
-void	draw_map(t_img *img, t_map *map, t_move *move);
+int		draw_map(t_img *img, t_map *map, t_move *move);
 
 // set.c
 int		set_data(t_data *data, char *file);
