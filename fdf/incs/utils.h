@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 03:05:05 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 17:38:17 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 22:35:23 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define WINDOW_HEIGHT 1000
 # define THETA_DEFAULT 0.42
 
+# define PRESSWINDOW 17
 # define KEYPRESS 2
 # define KEYPRESSMASK 1L
 
@@ -104,9 +105,14 @@ int		calc_color(t_line *line, t_point current, bool big);
 // free.c
 void	free_fdf(t_data	*data);
 
+// keypress.c
+int		handle_xpress(t_data *data);
+int		handle_keypress(int keysym, t_data *data);
+
 // render.c
 void	img_put_pix(t_img *img, int x, int y, int color);
 void	fdf(t_data *data);
+int		render(t_data *data);
 
 // line.c
 void	draw_line(t_img *img, t_point a, t_point b);

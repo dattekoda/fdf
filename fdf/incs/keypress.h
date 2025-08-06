@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 03:08:46 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 17:30:15 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 22:28:21 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,5 @@
 // # define MINUS_KEY 27
 // # define COMMA_KEY 43 // <
 // # define DOT_KEY 47 // >
-
-// keypress.c
-void	move_camera(int keysym, t_data *data);
-void	rotate_camera(int keysym, t_data *data);
-void	change_map(int keysym, t_data *data);
 
 #endif

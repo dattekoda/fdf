@@ -6,13 +6,45 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 04:18:56 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 03:13:37 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/06 22:35:33 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include "keypress.h"
 
-void	move_camera(int keysym, t_data *data)
+static void	move_camera(int keysym, t_data *data);
+static void	rotate_camera(int keysym, t_data *data);
+static void	change_map(int keysym, t_data *data);
+
+int	handle_xpress(t_data *data)
+{
+	free(data->map->isom_map);
+	exit((free_fdf(data), SUCCESS));
+}
+
+int	handle_keypress(int keysym, t_data *data)
+{
+	free(data->map->isom_map);
+	if (keysym == ESC_KEY)
+		exit((free_fdf(data), SUCCESS));
+	if (keysym == UP_KEY || keysym == DOWN_KEY
+		|| keysym == LEFT_KEY || keysym == RIGHT_KEY
+		|| keysym == PLUS_KEY || keysym == MINUS_KEY)
+		move_camera(keysym, data);
+	else if (keysym == A_KEY || keysym == D_KEY
+		|| keysym == W_KEY || keysym == S_KEY
+		|| keysym == Q_KEY || keysym == E_KEY
+		|| keysym == I_KEY || keysym == X_KEY
+		|| keysym == Y_KEY || keysym == Z_KEY)
+		rotate_camera(keysym, data);
+	else if (keysym == DOT_KEY || keysym == COMMA_KEY)
+		change_map(keysym, data);
+	render(data);
+	return (SUCCESS);
+}
+
+static void	move_camera(int keysym, t_data *data)
 {
 	if (keysym == UP_KEY)
 		data->move->ud += DELTA_UD;
@@ -28,7 +60,7 @@ void	move_camera(int keysym, t_data *data)
 		data->move->zoom -= DELTA_ZOOM;
 }
 
-void	rotate_camera(int keysym, t_data *data)
+static void	rotate_camera(int keysym, t_data *data)
 {
 	if (keysym == D_KEY)
 		data->move->z_theta -= DELTA_THETA;
@@ -52,7 +84,7 @@ void	rotate_camera(int keysym, t_data *data)
 		data->move->z_theta = 0;
 }
 
-void	change_map(int keysym, t_data *data)
+static void	change_map(int keysym, t_data *data)
 {
 	if (keysym == DOT_KEY)
 		data->move->altitude += DELTA_ALTITUDE;
