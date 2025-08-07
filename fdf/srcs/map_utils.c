@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 02:57:58 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 19:56:27 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:16:21 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	hex(char *str, char *elem)
 	char	*tmp;
 
 	if (!str)
-		return (-1);
+		return (WH_COLOR);
 	hex = 0;
 	tmp = ft_strchr(str, 'x');
 	if (!tmp)
@@ -57,7 +57,7 @@ int	hex(char *str, char *elem)
 	{
 		tmp = ft_strchr(elem, ft_tolower(*str++));
 		if (!tmp)
-			return (-1);
+			return (WH_COLOR);
 		hex = 16 * hex + (int)(tmp - elem);
 	}
 	return (hex);

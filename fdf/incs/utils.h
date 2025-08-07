@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 03:05:05 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 22:35:23 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/07 14:24:36 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@
 # define KEYPRESS 2
 # define KEYPRESSMASK 1L
 
-# define DELTA_THETA 0.03
+# define DELTA_THETA 0.01
 # define DELTA_ALTITUDE 0.002
-# define DELTA_ZOOM 2
+# define DELTA_ZOOM 1
 # define DELTA_LR 4
 # define DELTA_UD 4
 
@@ -87,6 +87,7 @@ typedef struct s_move
 	int		zoom;
 	int		lr;
 	int		ud;
+	bool	big_map;
 }	t_move;
 
 typedef struct s_data

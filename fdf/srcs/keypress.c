@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 04:18:56 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 22:35:33 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/07 14:18:52 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static void	move_camera(int keysym, t_data *data)
 	else if (keysym == RIGHT_KEY)
 		data->move->lr -= DELTA_LR;
 	else if (keysym == PLUS_KEY)
-		data->move->zoom += DELTA_ZOOM;
-	else if (keysym == MINUS_KEY && DELTA_ZOOM + 2 < data->move->zoom)
-		data->move->zoom -= DELTA_ZOOM;
+		data->move->zoom += DELTA_ZOOM * (2 - data->move->big_map);
+	else if (keysym == MINUS_KEY && DELTA_ZOOM < data->move->zoom)
+		data->move->zoom -= DELTA_ZOOM * (2 - data->move->big_map);
 }
 
 static void	rotate_camera(int keysym, t_data *data)
