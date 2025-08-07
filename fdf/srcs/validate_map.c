@@ -6,13 +6,14 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:54:41 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/06 19:58:33 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/07 23:05:06 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
 static int	read_file(t_list **lst, char *file, t_map *map);
+static int	check_validate(t_list *lst, t_map *map);
 static void	get_one_line(t_map *map, char *line, int y);
 static int	get_map(t_map *map, t_list *lst);
 
@@ -24,6 +25,9 @@ int	validate_map(char *file, t_map *map)
 	lst = NULL;
 	if (read_file(&lst, file, map))
 		return (ERR);
+	if (check_validate(lst, map))
+		return (ft_putendl_fd("Invalid map.", STDERR_FILENO),
+			ft_lstclear(&lst, free), ERR);
 	if (get_map(map, lst))
 		return (ft_lstclear(&lst, free), ERR);
 	ft_lstclear(&lst, free);
@@ -55,6 +59,26 @@ static int	read_file(t_list **lst, char *file, t_map *map)
 	}
 	map->width = count_elems((*lst)->content);
 	return (close(fd), SUCCESS);
+}
+
+static int	check_validate(t_list *lst, t_map *map)
+{
+	int		width;
+	int		i;
+	t_list	*n;
+
+	i = -1;
+	n = lst;
+	if (map->height == 0)
+		return (ERR);
+	while (++i < map->height)
+	{
+		width = count_elems(n->content);
+		if (width != map->width)
+			return (ERR);
+		n = n->next;
+	}
+	return (SUCCESS);
 }
 
 static void	get_one_line(t_map *map, char *line, int y)

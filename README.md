@@ -34,4 +34,6 @@ typedef struct s_img
 色はRGBの情報として格納されている。  
 0x00<span style="color: red">FF</span><span style="color: green">00</span><span style="color: blue">FF</span>  
 →この例だと<span style="color: red">Red</span>の強さが255、<span style="color: green">Green</span>の強さが0、<span style="color: blue">Blue</span> の強さが255として捉える。  
-最初の2桁の数字は無視される。  
+
+## 2025/08/07
+mapのheightが0のときにセグフォするバグを修正。
