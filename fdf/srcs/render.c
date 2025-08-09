@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 22:54:55 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/07 23:04:18 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/09 14:46:49 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ void	fdf(t_data *data)
 	mlx_hook(data->win_ptr, KEYPRESS, KEYPRESSMASK, &handle_keypress, data);
 	mlx_hook(data->win_ptr, PRESSWINDOW, 1L << 17, &handle_xpress, data);
 	mlx_loop(data->mlx_ptr);
-	mlx_destroy_image(data->mlx_ptr, data->img->mlx_img);
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	free_fdf(data);
 }
 
 int	render(t_data *data)

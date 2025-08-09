@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:54:41 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/07 23:05:06 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/09 10:33:38 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int	validate_map(char *file, t_map *map)
 
 	map->height = 0;
 	lst = NULL;
+	map->map = NULL;
+	map->map_color = NULL;
+	map->isom_map = NULL;
 	if (read_file(&lst, file, map))
 		return (ERR);
 	if (check_validate(lst, map))

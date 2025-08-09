@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 04:18:56 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/07 14:18:52 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/09 10:36:48 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static void	change_map(int keysym, t_data *data);
 
 int	handle_xpress(t_data *data)
 {
-	free(data->map->isom_map);
 	exit((free_fdf(data), SUCCESS));
 }
 
 int	handle_keypress(int keysym, t_data *data)
 {
 	free(data->map->isom_map);
+	data->map->isom_map = NULL;
 	if (keysym == ESC_KEY)
 		exit((free_fdf(data), SUCCESS));
 	if (keysym == UP_KEY || keysym == DOWN_KEY

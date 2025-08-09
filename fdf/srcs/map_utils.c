@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 02:57:58 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/07 12:16:21 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/09 10:34:59 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	free_map(t_map *map)
 		free(map->map);
 	if (map->map_color)
 		free(map->map_color);
+	if (map->isom_map)
+		free(map->isom_map);
 }
 
 // str = "0x00ff00", assume there should be starting from 0x
