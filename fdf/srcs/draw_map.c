@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 00:29:24 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/07 14:05:38 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/10 20:04:03 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,19 @@ static int		calc_isometric(t_map *map, t_move *move);
 
 int	draw_map(t_img *img, t_map *map, t_move *move)
 {
-	int	x;
-	int	y;
 	int	idx;
+	int	map_len;
 
-	y = -1;
+	idx = -1;
+	map_len = map->width * map->height;
 	if (calc_isometric(map, move))
 		return (ERR);
-	while (++y < map->height - 1)
+	while (++idx < map_len)
 	{
-		x = -1;
-		while (++x < map->width - 1)
-		{
-			idx = y * map->width + x;
+		if (idx % map->width != map->width - 1)
 			draw_line(img, map->isom_map[idx], map->isom_map[idx + 1]);
+		if (idx + map->width < map_len)
 			draw_line(img, map->isom_map[idx], map->isom_map[idx + map->width]);
-		}
 	}
 	return (SUCCESS);
 }

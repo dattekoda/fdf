@@ -6,7 +6,7 @@
 /*   By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 04:18:56 by khanadat          #+#    #+#             */
-/*   Updated: 2025/08/09 10:36:48 by khanadat         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:47:11 by khanadat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ static void	rotate_camera(int keysym, t_data *data)
 		data->move->z_theta -= DELTA_THETA;
 	else if (keysym == A_KEY)
 		data->move->z_theta += DELTA_THETA;
-	else if (keysym == W_KEY)
-		data->move->y_theta -= DELTA_THETA;
 	else if (keysym == S_KEY)
-		data->move->y_theta += DELTA_THETA;
-	else if (keysym == Q_KEY)
 		data->move->x_theta -= DELTA_THETA;
-	else if (keysym == E_KEY)
+	else if (keysym == W_KEY)
 		data->move->x_theta += DELTA_THETA;
+	else if (keysym == E_KEY)
+		data->move->y_theta -= DELTA_THETA;
+	else if (keysym == Q_KEY)
+		data->move->y_theta += DELTA_THETA;
 	else if (keysym == I_KEY)
 		*(data->move) = set_move(data->map);
 	else if (keysym == X_KEY)
