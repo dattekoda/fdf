@@ -6,13 +6,13 @@
 #    By: khanadat <khanadat@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/06 20:03:40 by khanadat          #+#    #+#              #
-#    Updated: 2025/08/06 20:16:00 by khanadat         ###   ########.fr        #
+#    Updated: 2025/11/13 16:37:23 by khanadat         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I incs
+CCFLAGS := -Wall -Wextra -Werror -I incs
 RM = rm -rf
 
 LIBFT_DIR = libft
@@ -31,9 +31,11 @@ UNAME = $(shell uname -s)
 ifeq ($(UNAME),Darwin)
 	MLX_DIR := minilibx_macos
 	MLX_FLAGS := -framework OpenGL -framework AppKit
+	CCFLAGS += -I mac_keypress
 else ifeq ($(UNAME),Linux)
 	MLX_DIR := minilibx-linux
 	MLX_FLAGS := -lX11 -lXext
+	CCFLAGS += -I linux_keypress
 else
 	$(error Unsupported OS: $(UNAME))
 endif
@@ -52,7 +54,7 @@ $(NAME): $(OBJS) $(LIBFT_A) $(MLX_A)
 
 $(OBJS_DIR)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I $(LIBFT_DIR)/includes \
+	$(CC) $(CCFLAGS) -I $(LIBFT_DIR)/includes \
 	-I $(MLX_DIR) -c $< -o $@
 
 $(LIBFT_A):
@@ -62,7 +64,7 @@ $(MLX_A):
 	$(MAKE) -C $(MLX_DIR)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJS_DIR)
