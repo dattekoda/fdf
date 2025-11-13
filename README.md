@@ -3,7 +3,7 @@
 ## レンダリング
 楽しい楽しいグラフィカル   
 
-<img src=".pictures/Screenshot from 2025-11-13 16-54-51.png" alt="t2.fdf" width="500">
+<img src=".pictures/t2.png" alt="t2.fdf" width="500">
 
 > 操作方法   
 【視点移動】   
